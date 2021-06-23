@@ -1,25 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Login from './Components/LoginSystem/Login.js';
+import Signup from './Components/LoginSystem/Signup.js';
+import Home from './Components/Home/Home'
+import Posts from './Components/Posts/Posts'
+import Friends from './Components/Friends/Friends'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [islogged, setIslogged] = useState(false);
+    const loginForm = (
+      <>
+        <div onClick={Login}>Zaloguj</div>
+        <div onClick={Signup}>Zarejestruj</div>
+      </>
+  )
+    const logoutForm = <button>Wyloguj</button>;
+    return (
+        <>
+            <h2 className="Logo">Bwitter</h2>
+            <Router>
+              <div>
+                <nav>
+                  <ul>
+                    <li>
+                      <Link to="/">Główna</Link>
+                    </li>
+                    <li>
+                      <Link to="/posty">Posty</Link>
+                    </li>
+                    <li>
+                      <Link to="/znajomi">Znajomi</Link>
+                    </li>
+                  </ul>
+                </nav>
+                <div>{islogged ? logoutForm : loginForm}</div>
+                <Switch>
+                  <Route path="/posty">
+                    <Posts />
+                  </Route>
+                  <Route path="/znajomi">
+                    <Friends />
+                  </Route>
+                  <Route path="/">
+                    <Home />
+                  </Route>
+                </Switch>
+              </div>
+            </Router>
+        </>
+    )
 }
 
 export default App;
