@@ -36,4 +36,4 @@ user/migrations/!__init__.py
 user_settings/migrations/*
 user_settings/__pycache__/*
 user_settings/migrations/!__init__.py
-
+frontend/frontend/node_modules
