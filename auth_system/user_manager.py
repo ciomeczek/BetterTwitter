@@ -6,7 +6,7 @@ from user_settings.models import UserSettings, AccountStatus
 
 class UserManager(BaseUserManager):
     def create_user(self, username, first_name, last_name, email, password=None):
-        password = validate_password(password=password)
+        #password = validate_password(password=password)
         email = self.normalize_email(email)
 
         username = get_user_model().normalize_username(username)

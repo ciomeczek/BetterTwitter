@@ -19,7 +19,13 @@ function App() {
         <div onClick={Signup}>Zarejestruj</div>
       </>
   )
-    const logoutForm = <button>Wyloguj</button>;
+    const viewusername = localStorage.getItem('username');
+    const logoutForm = (
+      <>
+        <button onClick={()=>localStorage.removeItem('username'), ()=>setIslogged(!islogged)}>Wyloguj</button>
+        <h3>Witaj {viewusername}</h3>
+      </>
+    );
     return (
         <>
             <h2 className="Logo">Bwitter</h2>

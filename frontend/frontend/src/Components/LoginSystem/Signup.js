@@ -38,8 +38,9 @@ function Signup(){
       const first_name = document.getElementById('swal-input2').value;
       const last_name = document.getElementById('swal-input2').value;
       const password = document.getElementById('swal-input2').value;
+      localStorage.setItem('username', username);
       axios.post('localhost:8000/users/create', { username, email, first_name, last_name, password })
-        //.then(()=>
+        .then(()=>
         Swal.fire({
             toast: 'true',
             position: 'top-end',
@@ -48,7 +49,7 @@ function Signup(){
             timerProgressBar: true,
             icon: 'success',
             title: 'Zarejestrowany!'
-        })//)
+        }))
       //chyba coś takiego xD
     } else {
         Swal.fire({

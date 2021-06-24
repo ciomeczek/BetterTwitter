@@ -24,6 +24,7 @@ function Login() {
       //tutaj można dać axiosa z wysywałniem danych
       const email = document.getElementById('swal-input1').value;
       const password = document.getElementById('swal-input2').value;
+      localStorage.setItem('username', email);
       const logged = await TokenService.login(email, password)
       if (logged)
         Swal.fire({
@@ -54,9 +55,11 @@ function Login() {
         // ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿⡏⠁⠀⠀⢸⣿⡇⠀⠀⠀
         // ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇⠀⠀⠀
         // ⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀
-        // ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        // Tutaj wstawiasz co się ma dziać jeśli się nie udało zalogować⠀
-        // I przepraszam za amogus ale chciałem być pewny że to zobaczysz
+        // ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀
+        Swal.fire({
+          icon: 'error',
+          title: 'Nie udało się zalogować'
+        });
       }
     } else {
       Swal.fire({
