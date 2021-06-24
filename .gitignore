@@ -6,34 +6,34 @@ BetterTwitter/__pycache__/*
 media/*
 
 auth_system/migrations/*
+!auth_system/migrations/__init__.py
 auth_system/__pycache__/*
-auth_system/migrations/!__init__.py
 
 comment/migrations/*
+!comment/migrations/__init__.py
 comment/__pycache__/*
-comment/migrations/!__init__.py
 
 comment_reaction/migrations/*
+!comment_reaction/migrations/__init__.py
 comment_reaction/__pycache__/*
-comment_reaction/migrations/!__init__.py
 
 friend/migrations/*
+!friend/migrations/__init__.py
 friend/__pycache__/*
-friend/migrations/!__init__.py
 
 post/migrations/*
+!post/migrations/__init__.py
 post/__pycache__/*
-post/migrations/!__init__.py
 
 post_reaction/migrations/*
+!post_reaction/migrations/__init__.py
 post_reaction/__pycache__/*
-post_reaction/migrations/!__init__.py
 
 user/migrations/*
+!user/migrations/__init__.py
 user/__pycache__/*
-user/migrations/!__init__.py
 
 user_settings/migrations/*
+!user_settings/migrations/__init__.py
 user_settings/__pycache__/*
-user_settings/migrations/!__init__.py
 frontend/frontend/node_modules
