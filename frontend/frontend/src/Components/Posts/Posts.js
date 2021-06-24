@@ -14,7 +14,7 @@ class Posts extends React.Component {
       render() {
         return (
           <div>
-            <h3>TODO</h3>
+            <h3>Dodaj post</h3>
             <PostElement items={this.state.items} />
             <form onSubmit={this.handleSubmit}>
               <input
