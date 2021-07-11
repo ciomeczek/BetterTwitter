@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 
-class AccountStatus(models.Model):
+class VisibilityStatus(models.Model):
     status_name = models.CharField(max_length=55)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.status_name
 
     @classmethod
@@ -25,24 +25,24 @@ class AccountStatus(models.Model):
 
 
 class UserSettings(models.Model):
-    account_status = models.ForeignKey(AccountStatus, on_delete=models.CASCADE)
+    account_status = models.ForeignKey(VisibilityStatus, on_delete=models.CASCADE)
     can_get_invites = models.BooleanField(default=True, blank=False, null=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return f'Settings of {get_user_model().objects.get(settings=self).username}'
 
     def set_account_status(self, account_status):
         if account_status == 1:
-            self.account_status = AccountStatus.get_public()
+            self.account_status = VisibilityStatus.get_public()
             self.save()
             return True
 
         if account_status == 2:
-            self.account_status = AccountStatus.get_private()
+            self.account_status = VisibilityStatus.get_private()
             self.save()
             return True
 
         if account_status == 3:
-            self.account_status = AccountStatus.get_secret()
+            self.account_status = VisibilityStatus.get_secret()
             self.save()
             return True

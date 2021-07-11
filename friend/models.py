@@ -6,7 +6,7 @@ class FriendList(models.Model):
     owner = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='friend_list')
     friends = models.ManyToManyField(get_user_model(), blank=True, related_name='friends')
 
-    def __str__(self):
+    def __unicode__(self):
         return 'Friend list of ' + self.owner.username
 
     def add_friend(self, user):
@@ -33,7 +33,7 @@ class FriendRequest(models.Model):
     receiver = models.ForeignKey(get_user_model(), related_name='receiver', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return f'From {self.sender.username} to {self.receiver.username}'
 
     @classmethod

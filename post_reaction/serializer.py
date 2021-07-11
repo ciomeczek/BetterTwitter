@@ -7,5 +7,5 @@ class ReactionSerializer(serializers.ModelSerializer):
     owner = FriendSerializer(read_only=True)
 
     class Meta:
-        model = Reaction
+        model = PostReaction
         fields = ['owner']

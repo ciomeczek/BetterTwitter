@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
 
     objects = UserManager()
 
-    def __str__(self):
+    def __unicode__(self):
         return self.username
 
     @property

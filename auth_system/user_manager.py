@@ -1,7 +1,7 @@
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
-from user_settings.models import UserSettings, AccountStatus
+from user_settings.models import UserSettings, VisibilityStatus
 
 
 class UserManager(BaseUserManager):
@@ -19,7 +19,7 @@ class UserManager(BaseUserManager):
         )
         user.set_password(password)
 
-        settings = UserSettings.objects.create(account_status=AccountStatus.get_public())
+        settings = UserSettings.objects.create(account_status=VisibilityStatus.get_public())
         settings.save()
         user.settings = settings
 

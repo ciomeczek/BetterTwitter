@@ -30,7 +30,8 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = '__all__'
 
-    def get_reaction_count(self, post):
+    @staticmethod
+    def get_reaction_count(post):
         return PostReaction.objects.filter(post=post).count()
 
     def get_have_i_reacted(self, post):
@@ -55,7 +56,8 @@ class PostDetailSerializer(serializers.ModelSerializer):
         comments = Comment.objects.filter(post=post).order_by('created_at')
         return CommentSerializer(comments, many=True, context={'request': self.context.get('request')}).data
 
-    def get_reaction_count(self, post):
+    @staticmethod
+    def get_reaction_count(post):
         return PostReaction.objects.filter(post=post).count()
 
     def get_have_i_reacted(self, post):

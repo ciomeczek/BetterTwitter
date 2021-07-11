@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from .serializer import UserSerializer, MeSerializer
 from friend.serializer import FriendSerializer
 from friend.models import FriendList
-from user_settings.models import AccountStatus
+from user_settings.models import VisibilityStatus
 from .imgs import cut
 from . import error_code
 
@@ -89,7 +89,7 @@ class GetUserByName(APIView):
                 fullname=Concat('first_name', Value(' '), 'last_name'))
 
             users = queryset.filter(fullname__startswith=name).exclude(
-                settings__account_status=AccountStatus.get_secret())[offset:limit]
+                settings__account_status=VisibilityStatus.get_secret())[offset:limit]
 
             serializer = FriendSerializer(users, many=True, context={'request': request})
             return Response(serializer.data)

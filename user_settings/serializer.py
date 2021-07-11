@@ -9,7 +9,8 @@ class SettingsSerializer(serializers.ModelSerializer):
         model = UserSettings
         fields = ['account_status', 'can_get_invites']
 
-    def get_account_status(self, settings):
+    @staticmethod
+    def get_account_status(settings):
         account_status = settings.account_status.status_name
         return account_status
 
@@ -21,6 +22,7 @@ class FriendSettingsSerializer(serializers.ModelSerializer):
         model = UserSettings
         fields = ['account_status', 'can_get_invites']
 
-    def get_account_status(self, settings):
+    @staticmethod
+    def get_account_status(settings):
         account_status = settings.account_status.status_name
         return account_status
