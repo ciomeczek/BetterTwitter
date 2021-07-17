@@ -1,60 +1,27 @@
-import React, { useState } from 'react';
-import PostElement from "./PostElement";
-import PostList from './PostList';
+import { useState } from 'react';
+import axios from 'axios';
 
-class Posts extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { items: [], title: '', text: '' };
-        this.handleTextChange = this.handleTextChange.bind(this);
-        this.handleTitleChange = this.handleTitleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-      }
-    
-      render() {
+function Posts(){
+    const [image, setImage] = useState();
+    const [text, setText] = useState();
+    let postArray = [];
+
+    const handleImageChange = e => setImage(URL.createObjectURL(e.target.files[0]));
+    const handleTextChange = e => setText(e.target);
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      axios.post('http://127.0.0.1:8000/create-post/', {text, image}).catch((err)=>{return false})
+    }
         return (
           <div>
-            <h3>Dodaj post</h3>
-            <PostElement items={this.state.items} />
-            <form onSubmit={this.handleSubmit}>
-              <input
-                onChange={this.handleTitleChange}
-                value={this.state.title}
-              />
-              <input
-                onChange={this.handleTextChange}
-                value={this.state.text}
-              />
-              <button>
-                Dodaj
-              </button>
+            <form onSubmit={handleSubmit}>
+              <input type="file" onChange={handleImageChange} />
+              <input type="text" onChange={handleTextChange} />
+                <button>
+                  Dodaj
+                </button>
             </form>
           </div>
         );
       }
-    
-      handleTextChange(e) {
-        this.setState({ text: e.target.value });
-      }
-      handleTitleChange(e) {
-        this.setState({ title: e.target.value });
-      }
-    
-      handleSubmit(e) {
-        e.preventDefault();
-        if (this.state.text.length === 0) {
-          return;
-        }
-        const newItem = {
-          text: this.state.text,
-          title: this.state.title,
-          id: Date.now()
-        };
-        this.setState(state => ({
-          items: state.items.concat(newItem),
-          title: '',
-          text: ''
-        }));
-      }
-    }
 export default Posts;
