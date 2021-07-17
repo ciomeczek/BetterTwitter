@@ -4,6 +4,7 @@ from friend.serializer import FriendSerializer
 from comment.serializer import CommentSerializer
 from comment.models import Comment
 from post_reaction.models import PostReaction
+from group.serializer import GroupSerializer
 
 
 class PostImageSerializer(serializers.ModelSerializer):
@@ -22,6 +23,7 @@ class PostImageSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     author = FriendSerializer(read_only=True)
     images = PostImageSerializer(read_only=True, many=True)
+    group = GroupSerializer()
     reaction_owners = FriendSerializer(read_only=True, many=True)
     reaction_count = serializers.SerializerMethodField()
     have_i_reacted = serializers.SerializerMethodField()
@@ -44,6 +46,7 @@ class PostSerializer(serializers.ModelSerializer):
 class PostDetailSerializer(serializers.ModelSerializer):
     author = FriendSerializer(read_only=True, many=False)
     images = PostImageSerializer(read_only=True, many=True)
+    group = GroupSerializer()
     comments = serializers.SerializerMethodField()
     reaction_count = serializers.SerializerMethodField()
     have_i_reacted = serializers.SerializerMethodField()

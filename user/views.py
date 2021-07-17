@@ -12,6 +12,7 @@ from friend.models import FriendList
 from user_settings.models import VisibilityStatus
 from .imgs import cut
 from . import error_code
+from post.views import validate_offset_and_limit
 
 
 class GetUser(APIView):
@@ -44,9 +45,9 @@ class CreateUser(APIView):
             return Response(error_code.NO_EMAIL, status=400)
         if password is None:
             return Response(error_code.NO_PASSWORD, status=400)
-        if first_name is None or first_name:
+        if first_name is None or not first_name:
             return Response(error_code.NO_FIRST_NAME, status=400)
-        if last_name is None or last_name:
+        if last_name is None or not last_name:
             return Response(error_code.NO_LAST_NAME, status=400)
 
         if get_user_model().objects.filter(email=email).exists():
@@ -66,24 +67,8 @@ class CreateUser(APIView):
 class GetUserByName(APIView):
     def get(self, request):
         if request.query_params.get('name') is not None and request.query_params.get('name'):
+            offset, limit = validate_offset_and_limit()
             name = request.query_params.get('name')
-            offset = request.query_params.get('offset') or None
-            limit = request.query_params.get('limit') or None
-
-            try:
-                if offset is not None:
-                    offset = int(offset)
-            except ValueError:
-                return Response(error_code.OFFSET_IS_NOT_INT, status=400)
-
-            try:
-                if limit is not None:
-                    limit = int(limit)
-            except ValueError:
-                return Response(error_code.LIMIT_IS_NOT_INT, status=400)
-
-            if offset is not None and limit is not None:
-                limit = offset + limit
 
             queryset = get_user_model().objects.annotate(
                 fullname=Concat('first_name', Value(' '), 'last_name'))

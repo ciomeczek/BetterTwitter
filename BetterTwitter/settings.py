@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'comment',
     'comment_reaction',
     'friend',
+    'group',
 ]
 
 MIDDLEWARE = [

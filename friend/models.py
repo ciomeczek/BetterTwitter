@@ -3,10 +3,12 @@ from django.contrib.auth import get_user_model
 
 
 class FriendList(models.Model):
-    owner = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='friend_list')
-    friends = models.ManyToManyField(get_user_model(), blank=True, related_name='friends')
+    owner = models.OneToOneField(
+        get_user_model(), on_delete=models.CASCADE, related_name='friend_list')
+    friends = models.ManyToManyField(
+        get_user_model(), blank=True, related_name='friends')
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Friend list of ' + self.owner.username
 
     def add_friend(self, user):
@@ -29,11 +31,13 @@ class FriendList(models.Model):
 
 
 class FriendRequest(models.Model):
-    sender = models.ForeignKey(get_user_model(), related_name='sender', on_delete=models.CASCADE)
-    receiver = models.ForeignKey(get_user_model(), related_name='receiver', on_delete=models.CASCADE)
+    sender = models.ForeignKey(
+        get_user_model(), related_name='sender', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(
+        get_user_model(), related_name='receiver', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return f'From {self.sender.username} to {self.receiver.username}'
 
     @classmethod
@@ -44,7 +48,8 @@ class FriendRequest(models.Model):
         if receiver == sender:
             return {"created": False}
 
-        user_friend_list, created = FriendList.objects.get_or_create(owner=sender)
+        user_friend_list, created = FriendList.objects.get_or_create(
+            owner=sender)
 
         if user_friend_list.is_friend(receiver):
             return {"created": False}
@@ -52,7 +57,8 @@ class FriendRequest(models.Model):
         if cls.objects.filter(sender=receiver, receiver=sender).exists():
             return {"created": False}
 
-        instance, created = cls.objects.get_or_create(sender=sender, receiver=receiver)
+        instance, created = cls.objects.get_or_create(
+            sender=sender, receiver=receiver)
 
         return {"created": created}
 

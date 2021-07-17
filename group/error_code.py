@@ -1,0 +1,12 @@
+NO_NAME_FOR_GROUP_CREATION = {'error_code': 'GROUP-1', 'message': 'name is none'}
+GROUP_NAME_ALREADY_EXISTS = {'error_code': 'GROUP-2', 'message': 'This group name already exists'}
+NO_GROUP_PK = {'error_code': 'GROUP-3', 'message': 'group_pk is none'}
+NO_GROUP_IMAGE = {'error_code': 'GROUP-4', 'message': 'image in none'}
+USER_IS_NOT_ADMIN = {'error_code': 'GROUP-5', 'message': 'User (you) is not admin of the group'}
+USER_IS_NOT_MEMBER = {'error_code': 'GROUP-6', 'message': 'User (you) is not member of the group'}
+NO_USER_PK = {'error_code': 'GROUP-7', 'message': 'user is none'}
+USER_DOESNT_EXIST = {'error_code': 'GROUP-8', 'message': 'User from user does not exists'}
+USER_NOT_IN_WAIT_LIST = {'error_code': 'GROUP-9', 'message': 'User from user is not on group wait list'}
+USER_IS_BANNED_FROM_GROUP = {'error_code': 'GROUP-10', 'message': 'User from user is banned from the group'}
+USER_IS_ALREADY_MEMBER = {'error_code': 'GROUP-11', 'message': 'User is already a member'}
+USER_TO_BAN_IS_REQUEST_USER = {'error_code': 'GROUP-12', 'message': 'User to ban is you'}

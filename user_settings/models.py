@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 class VisibilityStatus(models.Model):
     status_name = models.CharField(max_length=55)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.status_name
 
     @classmethod
@@ -25,10 +25,12 @@ class VisibilityStatus(models.Model):
 
 
 class UserSettings(models.Model):
-    account_status = models.ForeignKey(VisibilityStatus, on_delete=models.CASCADE)
-    can_get_invites = models.BooleanField(default=True, blank=False, null=False)
+    account_status = models.ForeignKey(
+        VisibilityStatus, on_delete=models.CASCADE)
+    can_get_invites = models.BooleanField(
+        default=True, blank=False, null=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return f'Settings of {get_user_model().objects.get(settings=self).username}'
 
     def set_account_status(self, account_status):

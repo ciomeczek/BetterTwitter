@@ -12,9 +12,12 @@ class CustomUser(AbstractUser):
 
     objects = UserManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.username
 
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    def is_in_group(self, group):
+        return self in group.members.all()

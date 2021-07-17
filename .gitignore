@@ -25,6 +25,10 @@ post/migrations/*
 !post/migrations/__init__.py
 post/__pycache__/*
 
+group/migrations/*
+!group/migrations/__init__.py
+group/__pycache__/*
+
 post_reaction/migrations/*
 !post_reaction/migrations/__init__.py
 post_reaction/__pycache__/*

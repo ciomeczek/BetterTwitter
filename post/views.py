@@ -13,17 +13,11 @@ def validate_offset_and_limit(request):
     offset = request.query_params.get('offset') or None
     limit = request.query_params.get('limit') or None
 
-    try:
-        if offset is not None:
-            offset = int(offset)
-    except ValueError:
-        return Response(error_code.OFFSET_IS_NOT_INT, status=400)
+    if offset is not None:
+        offset = int(offset)
 
-    try:
-        if limit is not None:
-            limit = int(limit)
-    except ValueError:
-        return Response(error_code.LIMIT_IS_NOT_INT, status=400)
+    if limit is not None:
+        limit = int(limit)
 
     if offset is not None and limit is not None:
         limit = offset + limit
@@ -57,7 +51,7 @@ class SeePostsOfUser(APIView):
 
     def get(self, request):
         offset, limit = validate_offset_and_limit(request)
-        qs = Post.objects.filter(author=request.user).order_by('-created_at')[offset:limit]
+        qs = Post.objects.filter(author=request.user, group=None).order_by('-created_at')[offset:limit]
         serializer = PostSerializer(qs, many=True, context={'request': request})
         return Response(serializer.data)
 
@@ -71,7 +65,7 @@ class SeePostsOfUserByID(APIView):
 
         offset, limit = validate_offset_and_limit(request)
 
-        qs = Post.objects.filter(author=user).order_by('-created_at')[offset:limit]
+        qs = Post.objects.filter(author=user, group=None).order_by('-created_at')[offset:limit]
         serializer = PostSerializer(
             qs, many=True, context={'request': request})
         return Response(serializer.data)
@@ -82,7 +76,7 @@ class SeePostDetailsByID(APIView):
         post = get_object_or_404(Post, pk=post_pk)
         user = post.author
 
-        if not Post.can_see_post(request_user=request.user, user=user):
+        if not post.can_see_post_with_group(request_user=request.user, user=user):
             return Response(error_code.AUTHOR_IS_PRIVATE, status=403)
 
         serializer = PostDetailSerializer(post, context={'request': request})
@@ -93,21 +87,7 @@ class HomePage(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        offset = request.query_params.get('offset') or None
-        limit = request.query_params.get('limit') or None
         post_id = request.query_params.get('post_id') or None
-
-        try:
-            if offset is not None:
-                offset = int(offset)
-        except ValueError:
-            return Response(error_code.OFFSET_IS_NOT_INT, status=400)
-
-        try:
-            if limit is not None:
-                limit = int(limit)
-        except ValueError:
-            return Response(error_code.LIMIT_IS_NOT_INT, status=400)
 
         try:
             if post_id is not None:
@@ -115,8 +95,7 @@ class HomePage(APIView):
         except ValueError:
             return Response(error_code.POST_ID_IS_NOT_INT, status=400)
 
-        if offset is not None and limit is not None:
-            limit = offset + limit
+        offset, limit = validate_offset_and_limit(request)
 
         user_friends = request.user.friend_list.friends.all()
 
@@ -124,10 +103,13 @@ class HomePage(APIView):
             post = get_object_or_404(Post, pk=post_id)
             from_date = post.created_at
 
-            qs = Post.objects.filter(created_at__gte=from_date,
-                                     author__in=user_friends).order_by('-created_at')[offset:limit]
+            qs1 = Post.objects.filter(group__in=request.user.user_groups.all())
+            qs2 = Post.objects.filter(group=None, author__in=user_friends, created_at__gte=from_date)
+            qs = qs1.union(qs2).order_by('-created_at')[offset:limit]
         else:
-            qs = Post.objects.filter(author__in=user_friends).order_by('-created_at')[offset:limit]
+            qs1 = Post.objects.filter(group__in=request.user.user_groups.all())
+            qs2 = Post.objects.filter(group=None, author__in=user_friends)
+            qs = qs1.union(qs2).order_by('-created_at')[offset:limit]
 
         serializer = PostSerializer(qs, many=True, context={'request': request})
         return Response(serializer.data)
