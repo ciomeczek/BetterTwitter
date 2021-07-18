@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'comment_reaction',
     'friend',
     'group',
+    'group_wait_list',
+    'group_ban_list',
 ]
 
 MIDDLEWARE = [

@@ -29,6 +29,14 @@ group/migrations/*
 !group/migrations/__init__.py
 group/__pycache__/*
 
+group_ban_list/migrations/*
+!group_ban_list/migrations/__init__.py
+group_ban_list/__pycache__/*
+
+group_wait_list/migrations/*
+!group_wait_list/migrations/__init__.py
+group_wait_list/__pycache__/*
+
 post_reaction/migrations/*
 !post_reaction/migrations/__init__.py
 post_reaction/__pycache__/*

@@ -12,7 +12,7 @@ from friend.models import FriendList
 from user_settings.models import VisibilityStatus
 from .imgs import cut
 from . import error_code
-from post.views import validate_offset_and_limit
+from BetterTwitter.general_functions import validate_offset_and_limit
 
 
 class GetUser(APIView):

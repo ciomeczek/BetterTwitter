@@ -27,4 +27,6 @@ urlpatterns = [
     path('comments/', include('comment.urls')),
     path('settings/', include('user_settings.urls')),
     path('groups/', include('group.urls')),
+    path('groups/ban-list/', include('group_ban_list.urls')),
+    path('groups/wait-list/', include('group_wait_list.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
