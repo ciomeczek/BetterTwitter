@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from .models import Post, PostImage
 from .serializer import PostSerializer, PostDetailSerializer
 from . import error_code
+from BetterTwitter.general_functions import validate_offset_and_limit
 
 
 class CreatePost(APIView):
